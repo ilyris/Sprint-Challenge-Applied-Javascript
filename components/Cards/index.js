@@ -50,7 +50,7 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
     const articles = response.data.articles;
     const cardsWrapper = document.querySelector(".cards-container");
 
-    // Loop through the values of the object
+    // Loop through the values of the article object to get the arrays in those properties
     for (index in articles) {
         console.log(articles[index]);
         // Loop through those arrays
