@@ -70,6 +70,9 @@ function showSlides(integer) {
   if (integer > sliderImages.length) slideIndex = 1;
   if (integer < 1) slideIndex = sliderImages.length;
 
+  for(let i = 0; i < sliderImages.length; i++) {
+    sliderImages[i].style.display = "none";
+  }
   sliderImages[slideIndex - 1].style.display = "block";
 }
 function plusSlides(integer) {

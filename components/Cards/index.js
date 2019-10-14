@@ -18,56 +18,47 @@
 //
 // Create a card for each of the articles and add the card to the DOM.
 
+function ArticleComponents(object, labelOfCard) {
+    const cardContainer = document.createElement('div');
+    const headline = document.createElement('div');
+    const author = document.createElement('div');
+    const imageContainer = document.createElement("div");
+    const image = document.createElement("img");
+    const span = document.createElement("span");
+
+    cardContainer.appendChild(headline);
+    cardContainer.appendChild(author);
+    author.appendChild(imageContainer);
+    imageContainer.appendChild(image);
+    author.appendChild(span);
+
+    cardContainer.classList.add("card");
+    headline.classList.add("headline");
+    author.classList.add("author");
+    imageContainer.classList.add("img-container");
+
+    headline.textContent = `${object.headline}`;
+    image.src = `${object.authorPhoto}`;
+    span.textContent = `${object.authorName}`;
+
+    return cardContainer;
+}
+
 axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
 .then( response => {
     console.log(response.data.articles);
     const articles = response.data.articles;
     const cardsWrapper = document.querySelector(".cards-container");
 
-    function ArticleComponents(object, labelOfCard) {
-        const cardContainer = document.createElement('div');
-        const typeOfCard = document.createElement("h1");
-        const headline = document.createElement('div');
-        const author = document.createElement('div');
-        const imageContainer = document.createElement("div");
-        const image = document.createElement("img");
-        const span = document.createElement("span");
-
-        cardContainer.appendChild(headline);
-        cardContainer.appendChild(author);
-        author.appendChild(imageContainer);
-        imageContainer.appendChild(image);
-        author.appendChild(span);
-        cardContainer.appendChild(typeOfCard);
-
-        cardContainer.classList.add("card");
-        headline.classList.add("headline");
-        author.classList.add("author");
-        imageContainer.classList.add("img-container");
-
-        headline.textContent = `${object.headline}`;
-        typeOfCard.textContent = `${labelOfCard}`;
-        image.src = `${object.authorPhoto}`;
-        span.textContent = `${object.authorName}`;
-
-        return cardContainer;
+    // Loop through the values of the object
+    for (index in articles) {
+        console.log(articles[index]);
+        // Loop through those arrays
+        articles[index].forEach( articlesContent => {
+            // return our Article Components as were passing in the articlesContent data.
+            return cardsWrapper.appendChild(ArticleComponents(articlesContent));
+        })
     }
-
-    articles.javascript.forEach( javascriptArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(javascriptArticles, "JavaScript"));
-    });
-    articles.bootstrap.forEach( bootstrapArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(bootstrapArticles, "Bootstrap"));
-    });
-    articles.jquery.forEach( jqueryArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(jqueryArticles, "jQuery"));
-    });
-    articles.node.forEach( nodeArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(nodeArticles, "NodeJs"));
-    });
-    articles.technology.forEach( technologyArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(technologyArticles, "Technology"));
-    });
 })
 .catch(error => {
     return error;
