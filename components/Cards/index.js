@@ -18,7 +18,7 @@
 //
 // Create a card for each of the articles and add the card to the DOM.
 
-function ArticleComponents(object, labelOfCard) {
+function ArticleComponents(articlesObject) {
     const cardContainer = document.createElement('div');
     const headline = document.createElement('div');
     const author = document.createElement('div');
@@ -37,9 +37,9 @@ function ArticleComponents(object, labelOfCard) {
     author.classList.add("author");
     imageContainer.classList.add("img-container");
 
-    headline.textContent = `${object.headline}`;
-    image.src = `${object.authorPhoto}`;
-    span.textContent = `${object.authorName}`;
+    headline.textContent = `${articlesObject.headline}`;
+    image.src = `${articlesObject.authorPhoto}`;
+    span.textContent = `${articlesObject.authorName}`;
 
     return cardContainer;
 }
@@ -50,15 +50,32 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
     const articles = response.data.articles;
     const cardsWrapper = document.querySelector(".cards-container");
 
+    // another way of doing it.. put the objects values in
+    const newArray = Object.values(articles);
+    // Loop through all those arrays in our new array.
+        newArray.forEach(moreArticles => {
+            // then loop through each of those array's arrays
+            moreArticles.forEach( articles => {
+                // then return those arrays content
+            return cardsWrapper.appendChild(ArticleComponents(articles));
+
+            });
+        });
+
     // Loop through the values of the article object to get the arrays in those properties
-    for (index in articles) {
-        console.log(articles[index]);
-        // Loop through those arrays
-        articles[index].forEach( articlesContent => {
-            // return our Article Components as were passing in the articlesContent data.
-            return cardsWrapper.appendChild(ArticleComponents(articlesContent));
-        })
-    }
+    // for (index in articles) {
+    //     console.log(articles[index]);
+    //     // Loop through those arrays
+    //     articles[index].forEach( articlesContent => {
+    //         console.log(articlesContent);
+    //         // return our Article Components as were passing in the articlesContent data.
+    //         return cardsWrapper.appendChild(ArticleComponents(articlesContent));
+    //     })
+    // }
+    // articles.forEach( moreArticles => {
+    //     console.log(moreArticles);
+    // });
+
 })
 .catch(error => {
     return error;
