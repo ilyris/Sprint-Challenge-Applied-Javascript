@@ -24,8 +24,9 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
     const articles = response.data.articles;
     const cardsWrapper = document.querySelector(".cards-container");
 
-    function ArticleComponents(object) {
+    function ArticleComponents(object, labelOfCard) {
         const cardContainer = document.createElement('div');
+        const typeOfCard = document.createElement("h1");
         const headline = document.createElement('div');
         const author = document.createElement('div');
         const imageContainer = document.createElement("div");
@@ -37,6 +38,7 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
         author.appendChild(imageContainer);
         imageContainer.appendChild(image);
         author.appendChild(span);
+        cardContainer.appendChild(typeOfCard);
 
         cardContainer.classList.add("card");
         headline.classList.add("headline");
@@ -44,6 +46,7 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
         imageContainer.classList.add("img-container");
 
         headline.textContent = `${object.headline}`;
+        typeOfCard.textContent = `${labelOfCard}`;
         image.src = `${object.authorPhoto}`;
         span.textContent = `${object.authorName}`;
 
@@ -51,19 +54,19 @@ axios.get(`https://lambda-times-backend.herokuapp.com/articles`)
     }
 
     articles.javascript.forEach( javascriptArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(javascriptArticles));
+        return cardsWrapper.appendChild(ArticleComponents(javascriptArticles, "JavaScript"));
     });
     articles.bootstrap.forEach( bootstrapArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(bootstrapArticles));
+        return cardsWrapper.appendChild(ArticleComponents(bootstrapArticles, "Bootstrap"));
     });
     articles.jquery.forEach( jqueryArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(jqueryArticles));
+        return cardsWrapper.appendChild(ArticleComponents(jqueryArticles, "jQuery"));
     });
     articles.node.forEach( nodeArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(nodeArticles));
+        return cardsWrapper.appendChild(ArticleComponents(nodeArticles, "NodeJs"));
     });
     articles.technology.forEach( technologyArticles => {
-        return cardsWrapper.appendChild(ArticleComponents(technologyArticles));
+        return cardsWrapper.appendChild(ArticleComponents(technologyArticles, "Technology"));
     });
 })
 .catch(error => {

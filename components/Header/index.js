@@ -23,6 +23,9 @@ function Header() {
     date.classList.add("date");
     temp.classList.add("temp");
 
+    date.textContent = "SMARCH 28, 2019";
+    h1.textContent = "Lambda Times";
+    temp.textContent = "98°";
     return header;
 }
 const headerComponent = Header;
